@@ -16,9 +16,18 @@ import { storeUserInfo } from "../service/authService";
 import { useRouter } from "next/navigation";
 import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+
+export const validationSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
 
 const LoginPage = () => {
   const router = useRouter();
+  const [error, setError] = useState("");
 
   const handleLogin = async (values: FieldValues) => {
     try {
@@ -27,7 +36,9 @@ const LoginPage = () => {
       if (res?.data?.data?.accessToken) {
         toast.success("You logged in successfully");
         storeUserInfo({ accessToken: res?.data?.data?.accessToken });
-        router.push("/");
+        router.push("/dashboard");
+      } else {
+        setError(res.message);
       }
     } catch (err: any) {
       console.error(err.message);
@@ -68,7 +79,14 @@ const LoginPage = () => {
             </Box>
           </Stack>
           <Box>
-            <PHForm onSubmit={handleLogin}>
+            <PHForm
+              onSubmit={handleLogin}
+              resolver={zodResolver(validationSchema)}
+              defaultValues={{
+                email: "",
+                password: "",
+              }}
+            >
               <Grid container spacing={2} my={1}>
                 <Grid size={6}>
                   <PHInput
