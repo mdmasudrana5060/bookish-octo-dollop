@@ -15,7 +15,7 @@ export const getUserInfo = () => {
   const authToken = getFromLocalStorage(authKey);
   if (authToken) {
     const decodedData: any = decodeToken(authToken);
-    console.log(decodedData);
+
     return {
       ...decodedData,
       role: decodedData?.role.toLowerCase(),

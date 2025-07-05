@@ -11,6 +11,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import FolderSharedIcon from "@mui/icons-material/FolderShared";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import MedicationIcon from "@mui/icons-material/Medication";
+import CategoryIcon from "@mui/icons-material/Category";
 
 export const drawerItems = (role: UserRole): DrawerItem[] => {
   const roleMenus: DrawerItem[] = [];
@@ -50,8 +51,13 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
         },
         {
           title: "Manage Doctors",
-          path: `${role}/manage-doctor`,
+          path: `${role}/manageDoctor`,
           icon: GroupIcon,
+        },
+        {
+          title: "Specialities",
+          path: `${role}/specialities`,
+          icon: CategoryIcon,
         },
         {
           title: "Manage Patients",
